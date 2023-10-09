@@ -15,23 +15,47 @@ def main():
 {operationAmount['amount']} {currency['code']}\n""")
 
         elif i['description'] == 'Перевод организации':
+            f = i['from']
+            f = f[0:16] + '****' + f[20:]
+
+            t = i['to']
+            t = t[0:20] + '****' + t[24:]
+
             print(f"""{(i['date'])[0:10]} {i['description']}
-{i['from']} -> {i['to']}
+{f} -> {t}
 {operationAmount['amount']} {currency['code']}\n""")
 
         elif i['description'] == 'Перевод со счета на счет':
+            f = i['from']
+            f = f[0:16] + '****' + f[20:]
+
+            t = i['to']
+            t = t[0:20] + '****' + t[24:]
+
             print(f"""{(i['date'])[0:10]} {i['description']}
-{i['from']} -> {i['to']}
+{f} -> {t}
 {operationAmount['amount']} {currency['code']}\n""")
 
         elif i['description'] == 'Перевод с карты на карту':
+            f = i['from']
+            f = f[0:16] + '****' + f[20:]
+
+            t = i['to']
+            t = t[0:20] + '****' + t[24:]
+
             print(f"""{(i['date'])[0:10]} {i['description']}
-{i['from']} -> {i['to']}
+{f} -> {t}
 {operationAmount['amount']} {currency['code']}\n""")
 
         elif i['description'] == 'Перевод с карты на счет':
+            f = i['from']
+            f = f[0:16] + '****' + f[20:]
+
+            t = i['to']
+            t = t[0:20] + '****' + t[24:]
+
             print(f"""{(i['date'])[0:10]} {i['description']}
-{i['from']} -> {i['to']}
+{f} -> {t}
 {operationAmount['amount']} {currency['code']}\n""")
 
         elif i['description'] == 'Перевод со счета на карту':
