@@ -6,62 +6,37 @@ def main():
     data = filtered_data(data)
     data = get_last_data(data)
     for i in data:
+        date = i['date'].replace('-', '.')[0:10]
+        correct_date = f'{date[5:7]}.{date[8:10]}.{date[:4]}'
+
         operationAmount = (i['operationAmount'])
         currency = (operationAmount['currency'])
+        to = i['to']
+        if 'Счет' in i['to']:
+            t = f"Счёт **{(i['to'])[-5:-1]}"
 
         if i['description'] == 'Открытие вклада':
-            print(f"""{(i['date'])[0:10]} {i['description']}
-->  Счёт **{(i['to'])[-5:-1]}
-{operationAmount['amount']} {currency['code']}\n""")
+            print(f"""{correct_date} {i['description']}
+->  {t}
+{operationAmount['amount']} {currency['name']}\n""")
 
-        elif i['description'] == 'Перевод организации':
+        else:
             f = i['from']
-            f = f[0:16] + '****' + f[20:]
+            if 'Visa Classic' in f:
+                f = f"{f[:12]} {f[13:17]} {f[17:19]}** **** {f[25:30]}"
 
-            t = i['to']
-            t = t[0:20] + '****' + t[24:]
+            elif 'Maestro' in f:
+                f = f"{f[:7]} {f[8:12]} {f[12:14]}** **** {f[19:]}"
 
-            print(f"""{(i['date'])[0:10]} {i['description']}
+            elif 'Счет' in f:
+                f = f"Счёт **{(i['to'])[-5:-1]}"
+
+
+            print(f"""{correct_date} {i['description']}
 {f} -> {t}
-{operationAmount['amount']} {currency['code']}\n""")
+{operationAmount['amount']} {currency['name']}\n""")
 
-        elif i['description'] == 'Перевод со счета на счет':
-            f = i['from']
-            f = f[0:16] + '****' + f[20:]
 
-            t = i['to']
-            t = t[0:20] + '****' + t[24:]
-
-            print(f"""{(i['date'])[0:10]} {i['description']}
-{f} -> {t}
-{operationAmount['amount']} {currency['code']}\n""")
-
-        elif i['description'] == 'Перевод с карты на карту':
-            f = i['from']
-            f = f[0:16] + '****' + f[20:]
-
-            t = i['to']
-            t = t[0:20] + '****' + t[24:]
-
-            print(f"""{(i['date'])[0:10]} {i['description']}
-{f} -> {t}
-{operationAmount['amount']} {currency['code']}\n""")
-
-        elif i['description'] == 'Перевод с карты на счет':
-            f = i['from']
-            f = f[0:16] + '****' + f[20:]
-
-            t = i['to']
-            t = t[0:20] + '****' + t[24:]
-
-            print(f"""{(i['date'])[0:10]} {i['description']}
-{f} -> {t}
-{operationAmount['amount']} {currency['code']}\n""")
-
-        elif i['description'] == 'Перевод со счета на карту':
-            print(f"""{(i['date'])[0:10]} {i['description']}
-{i['from']} -> {i['to']}
-{operationAmount['amount']} {currency['code']}\n""")
 
 
 
